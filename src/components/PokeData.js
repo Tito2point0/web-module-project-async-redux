@@ -1,6 +1,13 @@
-import React from "react";
 
-const PokeData = ({ pokemon }) => {
+import React from 'react';
+import { connect } from 'react-redux';
+const PokeData = (props) => {
+  const { pokemon } = props;
+  if (!pokemon) {
+    return null
+  }
+  
+
   return (
     <div className="pokemon-card">
       <h3>Name: {pokemon.name}</h3>
@@ -8,11 +15,7 @@ const PokeData = ({ pokemon }) => {
       <p>Supertype: {pokemon.supertype}</p>
       <p>Level: {pokemon.level}</p>
       <p>HP: {pokemon.hp}</p>
-      <p>Type: {pokemon.types.join(", ")}</p>
-
-     
-      {pokemon.subtypes && <p>Subtypes: {pokemon.subtypes.join(", ")}</p>}
-
+  
       
       {pokemon.abilities && (
         <div>
@@ -22,7 +25,7 @@ const PokeData = ({ pokemon }) => {
               <li key={index}>
                 <strong>Name:</strong> {ability.name}
                 <br />
-                <strong>Type:</strong> {ability.type}
+                <strong>Types:</strong> {ability.types}
                 <br />
                 <strong>Text:</strong> {ability.text}
                 <br />
@@ -62,7 +65,7 @@ const PokeData = ({ pokemon }) => {
           <ul>
             {pokemon.weaknesses.map((weakness, index) => (
               <li key={index}>
-                <strong>Type:</strong> {weakness.type}
+                <strong>Type:</strong> {weakness.types}
                 <br />
                 <strong>Value:</strong> {weakness.value}
                 <br />
@@ -78,7 +81,7 @@ const PokeData = ({ pokemon }) => {
           <ul>
             {pokemon.resistances.map((resistance, index) => (
               <li key={index}>
-                <strong>Type:</strong> {resistance.type}
+                <strong>Type:</strong> {resistance.types}
                 <br />
                 <strong>Value:</strong> {resistance.value}
                 <br />
@@ -149,4 +152,50 @@ const PokeData = ({ pokemon }) => {
   );
 };
 
-export default PokeData;
+const MapStateProps = state => {
+  console.log(state.pokemon)
+  return {
+    pokemon: state.pokemon
+    
+  }
+} 
+
+export default connect(MapStateProps)(PokeData);
+
+// import React from "react";
+// import { connect } from 'react-redux';
+
+
+// const PokeData = props => {
+//   const { pokemon  } = props;
+//   const array = Object.keys(pokemon)
+//   console.log(array)
+
+//   return (
+//     <div className="pokemon-card">
+//       <h2>pokemonlisto</h2>
+//       <ol>
+//         {Object.keys(pokemon).map((item) => (
+//           <li key={item.id}>
+//             <strong className="opener">{item.name}</strong>
+            
+
+//             <ul> {item.set}</ul>
+//           </li>
+//         ))}
+//       </ol>
+
+//     </div>
+//   );
+// };
+
+// const mapStateToProps = state => {
+//   return {
+//     pokemon: state.pokemon,
+//     // Assuming you have this in your state
+//   };
+// };
+
+
+// export default connect(mapStateToProps)(PokeData);
+
